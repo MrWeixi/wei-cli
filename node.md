@@ -1,0 +1,5 @@
+- 先创建可执行的脚本  #！usr/bin/env node
+- 配置pagepack.json  'bin'
+- nom link 执行本地环境  链接到本地环境 name为基准
+- link 相当于把本地模块链接到npm 目录下  npm目录可以直接访问
+- npm doc

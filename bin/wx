@@ -1,0 +1,63 @@
+#! /usr/bin/env node
+// console.log('wx-cli')
+
+/**
+ * 1、配置可执行命令 commander
+ * 2、实现脚手架 交互 inquirer
+ * 3、将模板下载
+ * 4、根据用户动态  metalsmith
+ * */
+
+const program = require("commander");
+// 颜色
+const chalk = require("chalk");
+const clearnArgs = (cmd) => {
+  // 取值
+  const args = {};
+  cmd.options.forEach((o) => {
+    const key = o.long.slice(2);
+    if (cmd[key]) args[key] = cmd[key];
+  });
+  return args;
+};
+
+//强制创建 调用 create
+program
+  .command("create <app-name>")
+  .description("create a new project")
+  .option("-f, --force", "overwrite target directory if it exists")
+  .action((name, cmd) => {
+    require("../lib/create")(name, clearnArgs(cmd));
+  });
+
+//配置UI
+program
+  .command("ui")
+  .description("start and open wx-cli ui")
+  .option("-p, --port <path>", "Port used for the UI server")
+  .action((cmd) => {
+    console.log(clearnArgs(cmd));
+  });
+// 配置
+program
+  .command("config [value]")
+  .description("inspect and modify the config")
+  .option("-g, --get <path>", "get vlalue from option")
+  .option("-s, --set <path> <value>")
+  .option("-d, --delete <path>", "delete option from config")
+  .action((value, cmd) => {
+    console.log(value, clearnArgs(cmd));
+  });
+// 版本号
+program
+  .version(`weixi-cli${require("../package.json").version}`)
+  .usage(`<command>[options]`);
+
+program.on("--help", function () {
+  console.log();
+  console.log(` Run ${chalk.cyan(`wx-cli <command> --help`)}  show details`);
+  console.log();
+});
+// 解析用户执行命令传入的参数
+// 核心功能1、创建项目 2、更改配置文件 3、UI界面
+program.parse(process.argv);
