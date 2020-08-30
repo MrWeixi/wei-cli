@@ -2,7 +2,7 @@
   "name": "weixi-cli",
   "version": "1.0.0",
   "private": false,
-  "description": "",
+  "description": "", 
   "bin": {
     "wx-cli": "./bin/wx",
     "wx": "./bin/wx"
